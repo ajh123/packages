@@ -1,4 +1,8 @@
---CC browser 2.0 alpha
+--[[>
+	  CC Browser 2.001 alpha, 
+	  Contributed with QuickMuffin8782 and SamH - ©2020
+<]]--
+
 
 local version = 2.001
 
@@ -1453,7 +1457,7 @@ function update()
 	local sVers = http.get("https://raw.githubusercontent.com/ajh123/packages/main/packages.json")
 	jsonVers = sVers.readAll() --Read and print contents of page
 	sVers.close() --Just in case
-	logger:info(jsonVers)
+	--logger:info(jsonVers)
 	t = decode(jsonVers)
 	name = t['name']
 	jver = t['version']
@@ -1461,11 +1465,22 @@ function update()
 		logger:info('New update ('..jver..')')
 
 		box = createDialogueBox("Updater",{"New verson availalbe {"..tostring(jver).."}","Do you want to update?"},"yn") --#Creates a dialogue box with the title "GUI API" ,two body lines: "This is a dialogue box!" and "Do you like it?" and the box type is "yn"
-		ret = box:draw( 20,5,5,colors.gray,colors.lightBlue,colors.white )
+		ret = box:draw( 3,3,5,colors.gray,colors.lightBlue,colors.white )
 		term.setTextColor(colors.green)
 		if ret then
 			logger:info('updating')
-
+			local fname = shell.getRunningProgram()
+			local sData, serr http.get("https://raw.githubusercontent.com/ajh123/packages/cc-browser/"..tostring(jver).."/main.lua")
+			if not sData then
+				local ebox = createDialogueBox("Updater",{"There was an error updating {"..tostring(err).."}"},"ok")
+				local ebox:draw( 3,3,5,colors.gray,colors.lightBlue,colors.white )
+				return false
+			end
+			local rData = sData.readAll()
+			h = fs.open(fname, "w")
+			h.write(rData)
+			h.close()
+			error('Updated')
 		end
 
 	end
