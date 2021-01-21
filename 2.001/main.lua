@@ -1461,7 +1461,7 @@ function update()
 	t = decode(jsonVers)
 	name = t['name']
 	jver = t['version']
-	if name == 'cc-browser' and tonumber(jver) > version then
+	if name == 'cc-browser' and tonumber(jver) >= version then
 		logger:info('New update ('..jver..')')
 
 		box = createDialogueBox("Updater",{"New verson availalbe {"..tostring(jver).."}","Do you want to update?"},"yn") --#Creates a dialogue box with the title "GUI API" ,two body lines: "This is a dialogue box!" and "Do you like it?" and the box type is "yn"
@@ -1473,7 +1473,7 @@ function update()
 			local sData, serr http.get("https://raw.githubusercontent.com/ajh123/packages/cc-browser/"..tostring(jver).."/main.lua")
 			if not sData then
 				local ebox = createDialogueBox("Updater",{"There was an error updating {"..tostring(err).."}"},"ok")
-				local ebox:draw( 3,3,5,colors.gray,colors.lightBlue,colors.white )
+				ebox:draw( 3,3,5,colors.gray,colors.lightBlue,colors.white )
 				return false
 			end
 			local rData = sData.readAll()
