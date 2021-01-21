@@ -1470,6 +1470,7 @@ function update()
 		if ret then
 			logger:info('updating')
 			local fname = shell.getRunningProgram()
+			logger:info("https://raw.githubusercontent.com/ajh123/packages/cc-browser/"..tostring(jver).."/main.lua")
 			local sData, serr http.get("https://raw.githubusercontent.com/ajh123/packages/cc-browser/"..tostring(jver).."/main.lua")
 			if not sData then
 				local ebox = createDialogueBox("Updater",{"There was an error updating {"..tostring(err).."}"},"ok")
